@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "TestVC.h"
+
 
 @interface AppDelegate ()
 
@@ -16,7 +18,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    TestVC *test = [[TestVC alloc]init];
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:test];
+    self.window.rootViewController = nav;
+    
+    
+    
     return YES;
 }
 

@@ -8,7 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol YBTextFieldAdjustDelegate <NSObject>
+
+@optional
+- (UIView *)getTheTextFieldRootView;
+
+@end
+
 @interface UITextField (YBAdjust)
+
+@property (nonatomic, weak) id<YBTextFieldAdjustDelegate> autoAdjustDelegate;
 
 /**自动适应*/
 - (void)setAutoAdjust: (BOOL)autoAdjust;

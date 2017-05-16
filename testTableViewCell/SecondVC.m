@@ -1,35 +1,42 @@
 //
-//  ViewController.m
+//  SecondVC.m
 //  testTableViewCell
 //
-//  Created by EDZ on 2017/2/3.
+//  Created by EDZ on 2017/5/16.
 //  Copyright © 2017年 王颖博. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "SecondVC.h"
 #import "EDZStorageInputCell.h"
 #import "UITextField+YBAdjust.h"
-
 
 
 #define EDZInputStorageCellId @"defaultCellId"
 
 
-@interface ViewController ()
+@interface SecondVC ()<YBTextFieldAdjustDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, weak) EDZStorageInputCell *editingCell;
 
 @end
 
-@implementation ViewController
+@implementation SecondVC
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     //创建tableView
     [self createTableView];
+    
+//    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object: nil];
+//    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object: nil];
 }
 
+-(void)dealloc
+{
+    NSLog(@"vc里移除通知");
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+}
 
 /**
  *  创建tableView
@@ -53,18 +60,37 @@
 - (void)keyboardWillShow: (NSNotification *)notification
 {
     NSLog(@"keyboard will show");
+    CGPoint relativePoint = [self.editingCell.textField convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
+    
+    CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    CGFloat actualHeight = CGRectGetHeight(self.editingCell.textField.frame) + relativePoint.y + keyboardHeight;
+    CGFloat overstep = actualHeight - CGRectGetHeight([UIScreen mainScreen].bounds) + 5;
+    if (overstep > 0) {
+        CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+        CGRect frame = [UIScreen mainScreen].bounds;
+        frame.origin.y -= overstep;
+        [UIView animateWithDuration: duration delay: 0 options: UIViewAnimationOptionCurveLinear animations: ^{
+            self.view.frame = frame;
+        } completion: nil];
+    }
 }
 
 - (void)keyboardWillHide: (NSNotification *)notification
 {
     NSLog(@"keyboard will hide");
+    CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    CGRect frame = [UIScreen mainScreen].bounds;
+    [UIView animateWithDuration: duration delay: 0 options: UIViewAnimationOptionCurveLinear animations: ^{
+        self.view.frame = frame;
+    } completion: nil];
+
 }
 
 
 #pragma mark -- tableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 20;
+    return 10;
 }
 
 
@@ -73,7 +99,7 @@
  */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 
 
@@ -82,6 +108,8 @@
     EDZStorageInputCell *cell = [EDZStorageInputCell cellWithTableView:tableView withIdentifier:EDZInputStorageCellId];
     
     cell.textField.delegate = self;
+    cell.textField.autoAdjustDelegate = self;
+    
     [cell.textField setAutoAdjust:YES];
     cell.textLB.text = [NSString stringWithFormat:@"第%ld行",indexPath.row];
     [cell layoutIfNeeded];
@@ -134,5 +162,12 @@
 {
     [self.editingCell.textField resignFirstResponder];
 }
+
+
+#pragma mark - UIScrollViewDelegate
+//- (UIView *)getTheTextFieldRootView
+//{
+//    return self.view;
+//}
 
 @end
