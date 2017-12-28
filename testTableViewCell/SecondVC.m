@@ -9,6 +9,7 @@
 #import "SecondVC.h"
 #import "EDZStorageInputCell.h"
 #import "UITextField+YBAdjust.h"
+#import "YBKeyBoardTool.h"
 
 
 #define EDZInputStorageCellId @"defaultCellId"
@@ -18,6 +19,7 @@
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, weak) EDZStorageInputCell *editingCell;
+@property (nonatomic, strong) YBKeyBoardTool *keyBoardTool;
 
 @end
 
@@ -30,6 +32,11 @@
     
 //    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object: nil];
 //    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object: nil];
+    
+    /**用YBKeyBoardTool去做*/
+    YBKeyBoardTool *keyboardTool = [[YBKeyBoardTool alloc]init];
+    [keyboardTool setDefaultHandler:self.tableView];
+    self.keyBoardTool = keyboardTool;
 }
 
 -(void)dealloc
@@ -106,13 +113,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     EDZStorageInputCell *cell = [EDZStorageInputCell cellWithTableView:tableView withIdentifier:EDZInputStorageCellId];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     cell.textField.delegate = self;
-    cell.textField.autoAdjustDelegate = self;
-    
-    [cell.textField setAutoAdjust:YES];
     cell.textLB.text = [NSString stringWithFormat:@"第%ld行",indexPath.row];
     [cell layoutIfNeeded];
+    
+    /**用UITextField+YBAdjust.h去做*/
+//    cell.textField.autoAdjustDelegate = self;
+//    [cell.textField setAutoAdjust:YES];
     
     return cell;
 }
@@ -160,14 +169,14 @@
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self.editingCell.textField resignFirstResponder];
+    //[self.editingCell.textField resignFirstResponder];
 }
 
 
 #pragma mark - UIScrollViewDelegate
-//- (UIView *)getTheTextFieldRootView
-//{
-//    return self.view;
-//}
+- (UIView *)getTheTextFieldRootView
+{
+    return self.view;
+}
 
 @end
