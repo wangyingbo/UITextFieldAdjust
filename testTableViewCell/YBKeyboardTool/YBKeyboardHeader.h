@@ -10,8 +10,11 @@
 #ifndef YBKeyboardHeader_h
 #define YBKeyboardHeader_h
 
-#import "YBKeyboardTool.h"
+#import "YBKeyBoardTool.h"
 #import "UITextField+YBAdjust.h"
+#import "UITextField+YBManager.h"
+#import "UITextView+YBAdjust.h"
+#import "UITextView+YBManager.h"
 
 
 #endif /* YBKeyboardHeader_h */

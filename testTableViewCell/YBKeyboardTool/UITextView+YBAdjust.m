@@ -1,45 +1,29 @@
 //
-//  UITextField+YBManager.m
+//  UITextView+YBAdjust.m
 //  testTableViewCell
 //
-//  Created by 王迎博 on 2018/1/15.
+//  Created by 王迎博 on 2018/1/17.
 //  Copyright © 2018年 王颖博. All rights reserved.
 //
 
-#import "UITextField+YBManager.h"
+#import "UITextView+YBAdjust.h"
 #import <objc/runtime.h>
 
+static const void *kName = "autoAdjustDelegate";
 
-// 高度变化的block
-static const void *showBlockKey = &showBlockKey;
-// 高度变化的block
-static const void *hiddenBlockKey = &hiddenBlockKey;
 
-@implementation UITextField (YBManager)
-
-- (UIKeyboardWillShowBlock)showBlock
+@implementation UITextView (YBAdjust)
+- (id<YBTextViewAdjustDelegate>)autoAdjustDelegate
 {
-    UIKeyboardWillShowBlock showBlock_ = objc_getAssociatedObject(self, showBlockKey);
-    return showBlock_;
+    
+    return objc_getAssociatedObject(self, kName);
 }
 
-- (void)setShowBlock:(UIKeyboardWillShowBlock)showBlock
+- (void)setAutoAdjustDelegate:(id<YBTextViewAdjustDelegate>)autoAdjustDelegate
 {
-    objc_setAssociatedObject(self, showBlockKey, showBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    objc_setAssociatedObject(self, kName, autoAdjustDelegate, OBJC_ASSOCIATION_ASSIGN);
 }
-
-- (UIKeyboardWillHiddenBlock)hiddenBlock
-{
-    UIKeyboardWillHiddenBlock hiddenBlock_ = objc_getAssociatedObject(self, hiddenBlockKey);
-    return hiddenBlock_;
-}
-
-- (void)setHiddenBlock:(UIKeyboardWillHiddenBlock)hiddenBlock
-{
-    objc_setAssociatedObject(self, hiddenBlockKey, hiddenBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
-}
-
-- (void)setManager: (BOOL)autoAdjust
+- (void)setAutoAdjust: (BOOL)autoAdjust
 {
     if (autoAdjust) {
         [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object: nil];
@@ -53,17 +37,31 @@ static const void *hiddenBlockKey = &hiddenBlockKey;
 {
     if (self.isFirstResponder) {
         CGPoint relativePoint = [self convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
-        CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+        
         CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
         CGFloat actualHeight = CGRectGetHeight(self.frame) + relativePoint.y + keyboardHeight;
         CGFloat overstep = actualHeight - CGRectGetHeight([UIScreen mainScreen].bounds) + 1;
         if (overstep > 0) {
+            CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
             CGRect frame = [UIScreen mainScreen].bounds;
             frame.origin.y -= overstep;
-            
-        }
-        if (self.showBlock) {
-            self.showBlock(keyboardHeight, overstep, duration);
+            [UIView animateWithDuration: duration delay: 0 options: UIViewAnimationOptionCurveLinear animations: ^{
+                
+                if (self.autoAdjustDelegate && [self.autoAdjustDelegate respondsToSelector:@selector(getTheTextViewRootView)])
+                {
+                    UIView *view = [self.autoAdjustDelegate getTheTextViewRootView];
+                    view.frame = frame;
+                }
+                else
+                {
+                    //[UIApplication sharedApplication].keyWindow.frame = frame;
+                    UIViewController *vc = [self getCurrentVC];
+                    vc.view.frame = frame;
+                    
+                }
+                
+                
+            } completion: nil];
         }
     }
 }
@@ -72,10 +70,22 @@ static const void *hiddenBlockKey = &hiddenBlockKey;
 {
     if (self.isFirstResponder) {
         CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-        CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
-        if (self.hiddenBlock) {
-            self.hiddenBlock(keyboardHeight, duration);
-        }
+        CGRect frame = [UIScreen mainScreen].bounds;
+        [UIView animateWithDuration: duration delay: 0 options: UIViewAnimationOptionCurveLinear animations: ^{
+            if (self.autoAdjustDelegate && [self.autoAdjustDelegate respondsToSelector:@selector(getTheTextViewRootView)])
+            {
+                UIView *view = [self.autoAdjustDelegate getTheTextViewRootView];
+                view.frame = frame;
+            }
+            else
+            {
+                //[UIApplication sharedApplication].keyWindow.frame = frame;
+                UIViewController *vc = [self getCurrentVC];
+                vc.view.frame = frame;
+                
+            }
+            
+        } completion: nil];
     }
 }
 

@@ -1,21 +1,21 @@
 //
-//  UITextField+YBManager.m
+//  UITextView+YBManager.m
 //  testTableViewCell
 //
-//  Created by 王迎博 on 2018/1/15.
+//  Created by 王迎博 on 2018/1/17.
 //  Copyright © 2018年 王颖博. All rights reserved.
 //
 
-#import "UITextField+YBManager.h"
+#import "UITextView+YBManager.h"
 #import <objc/runtime.h>
-
 
 // 高度变化的block
 static const void *showBlockKey = &showBlockKey;
 // 高度变化的block
 static const void *hiddenBlockKey = &hiddenBlockKey;
 
-@implementation UITextField (YBManager)
+
+@implementation UITextView (YBManager)
 
 - (UIKeyboardWillShowBlock)showBlock
 {
@@ -144,5 +144,4 @@ static const void *hiddenBlockKey = &hiddenBlockKey;
     }
     return (UIViewController *)responder;
 }
-
 @end

@@ -57,7 +57,16 @@
         textField.borderStyle = UITextBorderStyleRoundedRect;
         textField.font = [UIFont systemFontOfSize:13.*VIEWLAYOUT_H];
         [self addSubview:textField];
+        textField.placeholder = @"textField";
         self.textField = textField;
+        
+        UITextView *textView = [[UITextView alloc]init];
+        textView.font = [UIFont systemFontOfSize:14.];
+        textView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        textView.layer.cornerRadius = 5;
+        textView.layer.borderWidth = 1;
+        [self addSubview:textView];
+        self.textView = textView;
         
         UILabel *textLabel = [[UILabel alloc]init];
         textLabel.textAlignment = NSTextAlignmentLeft;
@@ -94,9 +103,11 @@
 {
     [super layoutSubviews];
     
-    self.textField.frame = CGRectMake(self.frame.size.width/3 +20*VIEWLAYOUT_W, self.frame.size.height/2 - textField_H/2, self.frame.size.width*2/3- 65*VIEWLAYOUT_W, textField_H);
+    self.textLB.frame = CGRectMake(12, self.frame.size.height/2 - textField_H/2, 60, textField_H);
     
-    self.textLB.frame = CGRectMake(12, self.frame.size.height/2 - textField_H/2, self.frame.size.width/3-12, textField_H);
+    self.textField.frame = CGRectMake(CGRectGetMaxX(self.textLB.frame) +10*VIEWLAYOUT_W, self.frame.size.height/2 - textField_H/2, self.frame.size.width*1/3, textField_H);
+    
+    self.textView.frame = CGRectMake(CGRectGetMaxX(self.textField.frame) + 10, CGRectGetMinY(self.textField.frame), self.frame.size.width/3, CGRectGetHeight(self.textField.frame));
     
     self.sweepButton.frame = CGRectMake(self.frame.size.width - 40*VIEWLAYOUT_W, self.frame.size.height/2- 35*VIEWLAYOUT_H/2, 35*VIEWLAYOUT_W, 35*VIEWLAYOUT_H);
     

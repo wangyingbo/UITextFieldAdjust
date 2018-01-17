@@ -1,17 +1,16 @@
 //
-//  UITextField+YBManager.h
+//  UITextView+YBManager.h
 //  testTableViewCell
 //
-//  Created by 王迎博 on 2018/1/15.
+//  Created by 王迎博 on 2018/1/17.
 //  Copyright © 2018年 王颖博. All rights reserved.
 //
-//  通过block传出键盘超过输入框的超过的值，然后自己调整控件的值
 
 #import <UIKit/UIKit.h>
 
 typedef void(^UIKeyboardWillShowBlock)(CGFloat keyboardHeight, CGFloat overstep, CGFloat duration);
 typedef void(^UIKeyboardWillHiddenBlock)(CGFloat keyboardHeight, CGFloat duration);
-@interface UITextField (YBManager)
+@interface UITextView (YBManager)
 @property (nonatomic, copy) UIKeyboardWillShowBlock showBlock;
 @property (nonatomic, copy) UIKeyboardWillHiddenBlock hiddenBlock;
 

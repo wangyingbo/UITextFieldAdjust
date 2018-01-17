@@ -11,6 +11,7 @@
 @interface EDZStorageInputCell : UITableViewCell
 
 @property (nonatomic, strong) UITextField *textField;
+@property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, copy) NSString *textFieldPlaceholder;
 @property (nonatomic, strong) UILabel *textLB;
 @property (nonatomic, strong) UIButton *sweepButton;
