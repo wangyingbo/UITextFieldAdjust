@@ -19,7 +19,19 @@ typedef void(^UIKeyboardWillHiddenBlock)(CGFloat keyboardHeight, CGFloat duratio
 
 @property (nonatomic, copy) UIKeyboardWillShowBlock showBlock;
 @property (nonatomic, copy) UIKeyboardWillHiddenBlock hiddenBlock;
+
+
 - (void)setDefaultHandler:(UIView *)view;
+
+/**
+ 监控键盘
+
+ @param view 如果textView或textField是加在collectionView或者tableView上，则传collectionView或者tableView，否则传本身或者父类views
+ @param Show 弹出时回调
+ @param Hidden 隐藏时回调s
+ */
 - (void)setHandlerView:(UIView *)view withShow:(UIKeyboardWillShowBlock)Show withHidden:(UIKeyboardWillHiddenBlock)Hidden;
 
+
++ (void)resignFirstResponder;
 @end

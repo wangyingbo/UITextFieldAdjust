@@ -15,6 +15,7 @@
 #import "UITextField+YBManager.h"
 #import "UITextView+YBAdjust.h"
 #import "UITextView+YBManager.h"
+#import "UIResponder+YBFirstResponder.h"
 
 
 #endif /* YBKeyboardHeader_h */

@@ -22,6 +22,7 @@
 		03BCA22A200CCB7B00035268 /* UITextField+YBAdjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BCA226200CCB7B00035268 /* UITextField+YBAdjust.m */; };
 		03C7C0C3200EF7CA00302C81 /* UITextView+YBAdjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C7C0C2200EF7CA00302C81 /* UITextView+YBAdjust.m */; };
 		03C7C0C6200EF89B00302C81 /* UITextView+YBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C7C0C5200EF89B00302C81 /* UITextView+YBManager.m */; };
+		03C7C0D6200F601000302C81 /* UIResponder+YBFirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C7C0D5200F601000302C81 /* UIResponder+YBFirstResponder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		03C7C0C2200EF7CA00302C81 /* UITextView+YBAdjust.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+YBAdjust.m"; sourceTree = "<group>"; };
 		03C7C0C4200EF89B00302C81 /* UITextView+YBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextView+YBManager.h"; sourceTree = "<group>"; };
 		03C7C0C5200EF89B00302C81 /* UITextView+YBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextView+YBManager.m"; sourceTree = "<group>"; };
+		03C7C0D4200F601000302C81 /* UIResponder+YBFirstResponder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIResponder+YBFirstResponder.h"; sourceTree = "<group>"; };
+		03C7C0D5200F601000302C81 /* UIResponder+YBFirstResponder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+YBFirstResponder.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				03BCA22B200CCC0000035268 /* YBKeyboardHeader.h */,
+				03C7C0D4200F601000302C81 /* UIResponder+YBFirstResponder.h */,
+				03C7C0D5200F601000302C81 /* UIResponder+YBFirstResponder.m */,
 				03BCA228200CCB7B00035268 /* YBKeyBoardTool.h */,
 				03BCA225200CCB7B00035268 /* YBKeyBoardTool.m */,
 				03BCA227200CCB7B00035268 /* UITextField+YBAdjust.h */,
@@ -323,6 +328,7 @@
 			files = (
 				03C7C0C6200EF89B00302C81 /* UITextView+YBManager.m in Sources */,
 				006E79D81ECB04A4001BF120 /* TestVC.m in Sources */,
+				03C7C0D6200F601000302C81 /* UIResponder+YBFirstResponder.m in Sources */,
 				03C7C0C3200EF7CA00302C81 /* UITextView+YBAdjust.m in Sources */,
 				03BCA22A200CCB7B00035268 /* UITextField+YBAdjust.m in Sources */,
 				037F69C5200CD19900FA3646 /* UITextField+YBManager.m in Sources */,

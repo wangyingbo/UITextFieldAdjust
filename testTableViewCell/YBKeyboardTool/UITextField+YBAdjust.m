@@ -11,12 +11,15 @@
 
 static const void *kName = "autoAdjustDelegate";
 
+NSString * kYBTextFieldNotification = @"YBTextFieldNotificationId";
 
 
 @implementation UITextField (YBAdjust)
 @dynamic autoAdjustDelegate;
 
 #pragma mark - 字符串类型的动态绑定
+
+
 
 - (id<YBTextFieldAdjustDelegate>)autoAdjustDelegate
 {

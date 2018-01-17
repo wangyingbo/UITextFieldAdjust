@@ -32,9 +32,12 @@
 //    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object: nil];
 //    [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object: nil];
     
+    __weak __typeof(self)weakSelf = self;
     /**用YBKeyBoardTool去做*/
     YBKeyBoardTool *keyboardTool = [[YBKeyBoardTool alloc]init];
-    [keyboardTool setDefaultHandler:self.view];
+    [keyboardTool setHandlerView:self.tableView withShow:^(CGFloat keyboardHeight, CGFloat overstep, CGFloat duration) {
+        
+    } withHidden:nil];;
     self.keyBoardTool = keyboardTool;
 }
 
@@ -61,37 +64,6 @@
     
     [self.tableView registerClass:[EDZStorageInputCell class] forCellReuseIdentifier:EDZInputStorageCellId];
 }
-
-#pragma mark - Notification
-- (void)keyboardWillShow: (NSNotification *)notification
-{
-    NSLog(@"keyboard will show");
-    CGPoint relativePoint = [self.editingCell.textField convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
-    
-    CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
-    CGFloat actualHeight = CGRectGetHeight(self.editingCell.textField.frame) + relativePoint.y + keyboardHeight;
-    CGFloat overstep = actualHeight - CGRectGetHeight([UIScreen mainScreen].bounds) + 5;
-    if (overstep > 0) {
-        CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-        CGRect frame = [UIScreen mainScreen].bounds;
-        frame.origin.y -= overstep;
-        [UIView animateWithDuration: duration delay: 0 options: UIViewAnimationOptionCurveLinear animations: ^{
-            self.view.frame = frame;
-        } completion: nil];
-    }
-}
-
-- (void)keyboardWillHide: (NSNotification *)notification
-{
-    NSLog(@"keyboard will hide");
-    CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    CGRect frame = [UIScreen mainScreen].bounds;
-    [UIView animateWithDuration: duration delay: 0 options: UIViewAnimationOptionCurveLinear animations: ^{
-        self.view.frame = frame;
-    } completion: nil];
-
-}
-
 
 #pragma mark -- tableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

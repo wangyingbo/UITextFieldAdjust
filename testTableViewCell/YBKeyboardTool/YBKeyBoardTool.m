@@ -8,19 +8,27 @@
 
 #import "YBKeyBoardTool.h"
 #import <UIKit/UIKit.h>
+#import "UIResponder+YBFirstResponder.h"
 
 @interface YBKeyBoardTool ()
 @property (nonatomic, strong) UIView *view;
 @property (nonatomic, assign) CGRect frame;
+@property (nonatomic, assign) CGPoint relativePoint;
 @end
 
 @implementation YBKeyBoardTool
 
++ (void)resignFirstResponder
+{
+    [[UIApplication sharedApplication] sendAction:@selector(resignFirstResponder) to:nil from:nil forEvent:nil];
+}
 
 - (void)setDefaultHandler:(UIView *)view
 {
     self.view = view;
     self.frame = view.frame;
+    CGPoint relativePoint = [self.view convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
+    self.relativePoint = relativePoint;
     
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object: nil];
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object: nil];
@@ -30,6 +38,8 @@
 {
     self.view = view;
     self.frame = view.frame;
+    CGPoint relativePoint = [self.view convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
+    self.relativePoint = relativePoint;
     
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillShow:) name: UIKeyboardWillShowNotification object: nil];
     [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(keyboardWillHide:) name: UIKeyboardWillHideNotification object: nil];
@@ -40,20 +50,31 @@
 
 - (void)keyboardWillShow: (NSNotification *)notification
 {
-    CGPoint relativePoint = [self.view convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+    //此种方法调用私有api，不可取
+    //UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    //UIView *firstResponder = [keyWindow performSelector:@selector(firstResponder)];
+#pragma clang diagnostic pop
+    //键盘弹出时拿到全局的第一响应者
+    UIView *firstResponder = (UIView *)[UIResponder currentFirstResponder];
+    
     CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
     CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    CGFloat overstep = CGRectGetHeight(self.frame) + relativePoint.y - (CGRectGetHeight([UIScreen mainScreen].bounds)-keyboardHeight);
+    
+    CGPoint firstResponderRelativePoint = [firstResponder convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
+    CGFloat firstResponderOverstep = CGRectGetHeight(firstResponder.frame) + firstResponderRelativePoint.y - (CGRectGetHeight([UIScreen mainScreen].bounds)-keyboardHeight);
     
     CGRect frame = self.frame;
-    if (overstep>1e-6) {
+
+    if (firstResponderOverstep>1e-6) {
+        frame.origin.y -= firstResponderOverstep;
+    }
+    
+    if ([self.view isKindOfClass:[UIScrollView class]]) {
         if (self.frame.size.height>(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight)) {
-            if ([self.view isKindOfClass:[UIScrollView class]]) {
-                frame.origin.y = 0;
-                frame.size.height = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight;
-            }else {
-                frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - self.frame.size.height;
-            }
+            frame.origin.y = 0;
+            frame.size.height = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight;
         }else {
             frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - self.frame.size.height;
         }
@@ -64,7 +85,7 @@
     } completion: nil];
     
     if (self.showBlock) {
-        self.showBlock(keyboardHeight, overstep, duration);
+        self.showBlock(keyboardHeight, firstResponderOverstep, duration);
     }
     
 }
