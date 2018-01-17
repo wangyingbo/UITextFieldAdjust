@@ -34,7 +34,7 @@
     
     /**用YBKeyBoardTool去做*/
     YBKeyBoardTool *keyboardTool = [[YBKeyBoardTool alloc]init];
-    [keyboardTool setDefaultHandler:self.tableView];
+    [keyboardTool setDefaultHandler:self.view];
     self.keyBoardTool = keyboardTool;
 }
 

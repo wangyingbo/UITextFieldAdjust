@@ -40,17 +40,31 @@
 
 - (void)keyboardWillShow: (NSNotification *)notification
 {
+    CGPoint relativePoint = [self.view convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
     CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
-    CGRect frame = self.frame;
     CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    frame.size.height = self.frame.size.height - keyboardHeight;
+    CGFloat overstep = CGRectGetHeight(self.frame) + relativePoint.y - (CGRectGetHeight([UIScreen mainScreen].bounds)-keyboardHeight);
+    
+    CGRect frame = self.frame;
+    if (overstep>1e-6) {
+        if (self.frame.size.height>(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight)) {
+            if ([self.view isKindOfClass:[UIScrollView class]]) {
+                frame.origin.y = 0;
+                frame.size.height = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight;
+            }else {
+                frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - self.frame.size.height;
+            }
+        }else {
+            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - self.frame.size.height;
+        }
+    }
     
     [UIView animateWithDuration: duration delay: 0 options: UIViewAnimationOptionCurveLinear animations: ^{
         self.view.frame = frame;
     } completion: nil];
     
     if (self.showBlock) {
-        self.showBlock(keyboardHeight, 0, duration);
+        self.showBlock(keyboardHeight, overstep, duration);
     }
     
 }
