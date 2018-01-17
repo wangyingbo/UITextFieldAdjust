@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "YBKeyBoardTool.h"
 
-typedef void(^UIKeyboardWillShowBlock)(CGFloat keyboardHeight, CGFloat overstep, CGFloat duration);
-typedef void(^UIKeyboardWillHiddenBlock)(CGFloat keyboardHeight, CGFloat duration);
 @interface UITextView (YBManager)
 @property (nonatomic, copy) UIKeyboardWillShowBlock showBlock;
 @property (nonatomic, copy) UIKeyboardWillHiddenBlock hiddenBlock;

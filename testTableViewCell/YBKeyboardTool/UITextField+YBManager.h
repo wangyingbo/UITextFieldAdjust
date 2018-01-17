@@ -8,9 +8,9 @@
 //  通过block传出键盘超过输入框的超过的值，然后自己调整控件的值
 
 #import <UIKit/UIKit.h>
+#import "YBKeyBoardTool.h"
 
-typedef void(^UIKeyboardWillShowBlock)(CGFloat keyboardHeight, CGFloat overstep, CGFloat duration);
-typedef void(^UIKeyboardWillHiddenBlock)(CGFloat keyboardHeight, CGFloat duration);
+
 @interface UITextField (YBManager)
 @property (nonatomic, copy) UIKeyboardWillShowBlock showBlock;
 @property (nonatomic, copy) UIKeyboardWillHiddenBlock hiddenBlock;
