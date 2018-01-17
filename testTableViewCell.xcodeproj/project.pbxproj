@@ -17,6 +17,7 @@
 		004DE1B91E446BE300AC805C /* EDZStorageInputCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 004DE1B81E446BE300AC805C /* EDZStorageInputCell.m */; };
 		006E79D81ECB04A4001BF120 /* TestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 006E79D71ECB04A4001BF120 /* TestVC.m */; };
 		006E79DB1ECB0538001BF120 /* SecondVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 006E79DA1ECB0538001BF120 /* SecondVC.m */; };
+		037F69C5200CD19900FA3646 /* UITextField+YBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 037F69C4200CD19900FA3646 /* UITextField+YBManager.m */; };
 		03BCA229200CCB7B00035268 /* YBKeyBoardTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BCA225200CCB7B00035268 /* YBKeyBoardTool.m */; };
 		03BCA22A200CCB7B00035268 /* UITextField+YBAdjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BCA226200CCB7B00035268 /* UITextField+YBAdjust.m */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,8 @@
 		006E79D71ECB04A4001BF120 /* TestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestVC.m; sourceTree = "<group>"; };
 		006E79D91ECB0538001BF120 /* SecondVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondVC.h; sourceTree = "<group>"; };
 		006E79DA1ECB0538001BF120 /* SecondVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondVC.m; sourceTree = "<group>"; };
+		037F69C3200CD19900FA3646 /* UITextField+YBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UITextField+YBManager.h"; sourceTree = "<group>"; };
+		037F69C4200CD19900FA3646 /* UITextField+YBManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UITextField+YBManager.m"; sourceTree = "<group>"; };
 		03BCA225200CCB7B00035268 /* YBKeyBoardTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBKeyBoardTool.m; sourceTree = "<group>"; };
 		03BCA226200CCB7B00035268 /* UITextField+YBAdjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+YBAdjust.m"; sourceTree = "<group>"; };
 		03BCA227200CCB7B00035268 /* UITextField+YBAdjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+YBAdjust.h"; sourceTree = "<group>"; };
@@ -166,6 +169,8 @@
 				03BCA225200CCB7B00035268 /* YBKeyBoardTool.m */,
 				03BCA227200CCB7B00035268 /* UITextField+YBAdjust.h */,
 				03BCA226200CCB7B00035268 /* UITextField+YBAdjust.m */,
+				037F69C3200CD19900FA3646 /* UITextField+YBManager.h */,
+				037F69C4200CD19900FA3646 /* UITextField+YBManager.m */,
 			);
 			path = YBKeyboardTool;
 			sourceTree = "<group>";
@@ -308,6 +313,7 @@
 			files = (
 				006E79D81ECB04A4001BF120 /* TestVC.m in Sources */,
 				03BCA22A200CCB7B00035268 /* UITextField+YBAdjust.m in Sources */,
+				037F69C5200CD19900FA3646 /* UITextField+YBManager.m in Sources */,
 				004DE1B91E446BE300AC805C /* EDZStorageInputCell.m in Sources */,
 				006E79DB1ECB0538001BF120 /* SecondVC.m in Sources */,
 				004DE1891E446A8E00AC805C /* AppDelegate.m in Sources */,
