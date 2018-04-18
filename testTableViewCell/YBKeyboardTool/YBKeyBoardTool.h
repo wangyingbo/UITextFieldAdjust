@@ -19,7 +19,7 @@ typedef void(^UIKeyboardWillHiddenBlock)(CGFloat keyboardHeight, CGFloat duratio
 
 @property (nonatomic, copy) UIKeyboardWillShowBlock showBlock;
 @property (nonatomic, copy) UIKeyboardWillHiddenBlock hiddenBlock;
-
+@property (nonatomic, assign) CGFloat topMargin;
 
 - (void)setDefaultHandler:(UIView *)view;
 
