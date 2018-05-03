@@ -59,7 +59,8 @@
     //键盘弹出时拿到全局的第一响应者
     UIView *firstResponder = (UIView *)[UIResponder currentFirstResponder];
     
-    CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    //UIKeyboardFrameBeginUserInfoKey替换为UIKeyboardFrameEndUserInfoKey
+    CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
     
     CGPoint firstResponderRelativePoint = [firstResponder convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
@@ -121,7 +122,7 @@
 - (void)keyboardWillHide: (NSNotification *)notification
 {
     CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-    CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameBeginUserInfoKey] CGRectValue].size.height;
+    CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     
     [UIView animateWithDuration: duration delay: 0 options: UIViewAnimationOptionCurveLinear animations: ^{
         self.view.frame = self.frame;
