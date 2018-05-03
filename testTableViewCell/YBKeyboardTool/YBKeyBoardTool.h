@@ -19,15 +19,23 @@ typedef void(^UIKeyboardWillHiddenBlock)(CGFloat keyboardHeight, CGFloat duratio
 
 @property (nonatomic, copy) UIKeyboardWillShowBlock showBlock;
 @property (nonatomic, copy) UIKeyboardWillHiddenBlock hiddenBlock;
+
+/**
+ topMargin:此参数只在调用setHandlerView:withShow:withHidden方法且方法的参数view为scrollView的子类（UITableView||UICollectionView）时使用
+ */
 @property (nonatomic, assign) CGFloat topMargin;
+/**
+ overV:此参数只在调用setHandlerView:withShow:withHidden方法且方法的参数view为scrollView的子类（UITableView||UICollectionView）时使用
+ */
 @property (nonatomic, assign) CGFloat overV;
+
 
 - (void)setDefaultHandler:(UIView *)view;
 
 /**
  监控键盘
 
- @param view 如果textView或textField是加在collectionView或者tableView上，则传collectionView或者tableView，否则传本身或者父类views
+ @param view 如果textView或textField是加在collectionView或者tableView上，则传collectionView或者tableView，否则传本身或者父类view
  @param Show 弹出时回调
  @param Hidden 隐藏时回调s
  */

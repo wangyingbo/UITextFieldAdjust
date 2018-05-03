@@ -68,13 +68,6 @@
     
     CGRect frame = self.frame;
 
-    if (firstResponderOverstep>1e-6) {
-        frame.origin.y -= firstResponderOverstep;
-    }
-    
-    if (firstResponderOverstep>1e-6) {
-        //frame.origin.y -= firstResponderOverstep;
-    }
     
     if ([self.view isKindOfClass:[UIScrollView class]]) {
         CGPoint scrollPoint = [self.view convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
@@ -99,6 +92,10 @@
                 frame.size.height = (CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight) -overV;
             }
             
+        }
+    }else {
+        if (firstResponderOverstep>1e-6) {
+            frame.origin.y = self.frame.origin.y - firstResponderOverstep;
         }
     }
     
