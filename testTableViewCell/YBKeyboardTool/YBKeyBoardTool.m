@@ -82,7 +82,9 @@
             CGFloat v =(scrollPoint.y+self.frame.size.height)-((CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight));
             frame.origin.y = self.frame.origin.y - v;
         }
-        if (self.topMargin-1e-6>0 && self.topMargin<(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - 44)) {
+        
+        CGFloat overV = self.overV-0>1e-6?self.overV:10.f;
+        if (self.topMargin && self.topMargin<(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - overV)) {
             frame.origin.y = self.topMargin;
         }else {
             if (frame.origin.y<0) {
@@ -90,11 +92,11 @@
             }
         }
         
-        if (self.frame.size.height>(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight)-44) {
-            if (self.topMargin-1e-6>0 && self.topMargin<(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - 44)) {
-                frame.size.height = (CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight) -44 - self.topMargin;
+        if (self.frame.size.height>(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight)-overV) {
+            if (ABS(self.topMargin - 0)>1e-6 && self.topMargin<(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - overV)) {
+                frame.size.height = (CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight) -overV - self.topMargin;
             }else {
-                frame.size.height = (CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight) -44;
+                frame.size.height = (CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight) -overV;
             }
             
         }
