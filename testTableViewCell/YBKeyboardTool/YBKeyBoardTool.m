@@ -58,7 +58,9 @@
 #pragma clang diagnostic pop
     //键盘弹出时拿到全局的第一响应者
     UIView *firstResponder = (UIView *)[UIResponder currentFirstResponder];
-    
+    if (![firstResponder isKindOfClass:[UIView class]]) {
+        return;
+    }
     //UIKeyboardFrameBeginUserInfoKey替换为UIKeyboardFrameEndUserInfoKey
     CGFloat keyboardHeight = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     CGFloat duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
