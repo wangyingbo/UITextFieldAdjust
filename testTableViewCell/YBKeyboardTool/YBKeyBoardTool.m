@@ -69,7 +69,7 @@
     CGFloat firstResponderOverstep = CGRectGetHeight(firstResponder.frame) + firstResponderRelativePoint.y - (CGRectGetHeight([UIScreen mainScreen].bounds)-keyboardHeight);
     
     CGRect frame = self.frame;
-
+    
     
     if ([self.view isKindOfClass:[UIScrollView class]]) {
         CGPoint scrollPoint = [self.view convertPoint: CGPointZero toView: [UIApplication sharedApplication].keyWindow];
@@ -78,7 +78,7 @@
             frame.origin.y = self.frame.origin.y - v;
         }
         
-        CGFloat overV = self.overV-0>1e-6?self.overV:10.f;
+        CGFloat overV = self.overV-0>1e-6?self.overV:2.f;
         if (self.topMargin && self.topMargin<(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - overV)) {
             frame.origin.y = self.topMargin;
         }else {
@@ -89,9 +89,9 @@
         
         if (self.frame.size.height>(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight)-overV) {
             if (ABS(self.topMargin - 0)>1e-6 && self.topMargin<(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - overV)) {
-                frame.size.height = (CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight) -overV - self.topMargin;
+                frame.size.height = (self.frame.size.height - keyboardHeight) -overV - self.topMargin;
             }else {
-                frame.size.height = (CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight) -overV;
+                frame.size.height = (self.frame.size.height - keyboardHeight) -overV;
             }
             
         }
@@ -101,14 +101,14 @@
         }
     }
     
-//    if ([self.view isKindOfClass:[UIScrollView class]]) {
-//        if (self.frame.size.height>(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight)) {
-//            frame.origin.y = 0;
-//            frame.size.height = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight;
-//        }else {
-//            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - self.frame.size.height;
-//        }
-//    }
+    //    if ([self.view isKindOfClass:[UIScrollView class]]) {
+    //        if (self.frame.size.height>(CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight)) {
+    //            frame.origin.y = 0;
+    //            frame.size.height = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight;
+    //        }else {
+    //            frame.origin.y = CGRectGetHeight([UIScreen mainScreen].bounds) - keyboardHeight - self.frame.size.height;
+    //        }
+    //    }
     
     [UIView animateWithDuration: duration delay: 0 options: UIViewAnimationOptionCurveLinear animations: ^{
         self.view.frame = frame;
